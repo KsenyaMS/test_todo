@@ -1,0 +1,28 @@
+.content-div {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 8px;
+}
+
+.droppable-div {
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #F4F4F9;
+}
+
+.drag-item {
+    padding: 15px;
+    border-radius: 6px;
+    border-top: 4px solid #b300ad;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    background: white;
+    margin: 0 0 8px 0;
+    display: grid;
+    grid-gap: 20px;
+    flex-direction: column;
+  }
+
+.flexbox-container {
+    display: flex;
+    flex-direction: row;
+}

@@ -1,0 +1,24 @@
+.site-layout {
+    height: 100%;
+    background: #FAFAFC;
+}
+
+.menu-background {
+    background: #435ebf;
+    color: white;
+}
+
+.size-for-max-window {
+    min-width: 1280px;
+    width: 1440px;
+}
+
+.size-for-small-window {
+    min-width: 480px;
+    width: 640px;
+}
+
+.size-for-middle-window {
+    min-width: 800px;
+    width: 960px;
+}
