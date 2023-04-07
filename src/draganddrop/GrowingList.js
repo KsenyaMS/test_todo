@@ -101,12 +101,12 @@ export default function GrowingList({title, project}) {
 
   const handleTypeChange = (e) => {
     if (e.target.value === "tasks") {
-      setState(JSON.parse(localStorage.getItem(projectName)));
+      setState(JSON.parse(localStorage.getItem(projectName)) ? JSON.parse(localStorage.getItem(projectName)) : []);
       window.localStorage.setItem(`${projectName} + tasksType`, "tasks");
       setTasksType("tasks");
     }
     else {
-      let list = JSON.parse(localStorage.getItem(projectName));
+      let list = JSON.parse(localStorage.getItem(projectName)) ? JSON.parse(localStorage.getItem(projectName)) : [];
       window.localStorage.setItem(`${projectName} + tasksType`, e.target.value);
       setTasksType(e.target.value);
       let items = [...list];
@@ -153,9 +153,9 @@ export default function GrowingList({title, project}) {
               value={tasksType}
               onChange={handleTypeChange}
             >
-              <Radio.Button value="at_work">Только в работе</Radio.Button>
+              <Radio.Button style={{borderTopLeftRadius: 15, borderBottomLeftRadius: 15}} value="at_work">Только в работе</Radio.Button>
               <Radio.Button value="tasks">Все задачи</Radio.Button>
-              <Radio.Button value="done">Только завершенные</Radio.Button>
+              <Radio.Button style={{borderTopRightRadius: 15, borderBottomRightRadius: 15}}  value="done">Только завершенные</Radio.Button>
             </Radio.Group>
           </Space>
         </div>
