@@ -8,6 +8,8 @@
     padding: 10px;
     border-radius: 6px;
     background-color: #F4F4F9;
+    height: 800px;
+    overflow-y: auto;
 }
 
 .drag-item {

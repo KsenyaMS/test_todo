@@ -19,7 +19,6 @@ export default function GrowingList({title, project}) {
   useEffect(() => {
     setProjectName(title);
     let type = window.localStorage.getItem(`${projectName} + tasksType`);
-    setTasksType(type);
     if (type === "tasks") {
       setState(JSON.parse(localStorage.getItem(projectName)) ? JSON.parse(localStorage.getItem(projectName)) : []);
     }
@@ -33,7 +32,7 @@ export default function GrowingList({title, project}) {
       let result = items.filter((s) => s.status === "at_work");
       setState(result);
     }
-  }, [project]);
+  }, [project, state]);
 
   const onDragEnd = (result) => {
     let newItems = [...state];
@@ -60,7 +59,6 @@ export default function GrowingList({title, project}) {
   };
 
   const onChangeElement = (params, id) => {
-    // window.localStorage.removeItem("1");
     let items = [...state];
     let element = items.find((s) => s.id === id);
     let index = items.indexOf(element);
@@ -77,7 +75,6 @@ export default function GrowingList({title, project}) {
     items.splice(index, 0, res);
     setState(items);
     window.localStorage.setItem(projectName, JSON.stringify(items));
-    console.log({localStorage});
   };
   
   const deleteElement = (value) => {
@@ -116,7 +113,6 @@ export default function GrowingList({title, project}) {
   };
 
   const onChangeName = (name) => {
-    console.log({name});
     let lastList = namesList;
     let element = lastList.find((s) => s === projectName);
     let index = lastList.indexOf(element);
@@ -152,6 +148,7 @@ export default function GrowingList({title, project}) {
             <Radio.Group
               value={tasksType}
               onChange={handleTypeChange}
+              defaultValue={"tasks"}
             >
               <Radio.Button style={{borderTopLeftRadius: 15, borderBottomLeftRadius: 15}} value="at_work">Только в работе</Radio.Button>
               <Radio.Button value="tasks">Все задачи</Radio.Button>

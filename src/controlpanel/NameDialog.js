@@ -1,11 +1,10 @@
 import React, {useState} from "react";
-import {Button, Col, Divider, Input, message, Modal, Row, Select, Space} from "antd";
+import {Col, Divider, Input, message, Modal, Row, Space} from "antd";
 import "./ControlPanel.css";
 import CancelButtonAntd from "../components/CancelButtonAntd";
 import ConfirmationButtonAntd from "../components/ConfirmationButtonAntd";
 
 const { TextArea } = Input;
-const { Option } = Select;
 const rowStyle = {padding: '4px'};
 
 export default function NameDialog({visible, onOk, onCancel}) {
@@ -13,7 +12,6 @@ export default function NameDialog({visible, onOk, onCancel}) {
   const namesList = JSON.parse(localStorage.getItem("NAMES")) ? JSON.parse(localStorage.getItem("NAMES")) : [];
 
   const handleNameChange = (projectName) => {
-    // console.log({localStorage});
     setData({...data, ...{name: projectName}})
   };
 
@@ -62,7 +60,6 @@ export default function NameDialog({visible, onOk, onCancel}) {
                     return;
                   }
                 }
-                // message.success("Проект создан!")
                 onOk(data);
               }}/>
             </Space>

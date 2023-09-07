@@ -1,15 +1,13 @@
 import React, {useState} from "react";
 import {isMobile} from 'react-device-detect';
 import {Link, Redirect, Route, Switch, useRouteMatch, useHistory} from "react-router-dom";
-import {Layout, Menu, message, Divider, Tooltip, Dropdown, Typography, ConfigProvider} from 'antd';
+import {Layout, Menu, Divider, Typography, ConfigProvider} from 'antd';
 import './ControlPanel.css'
-import {LogoutOutlined, BarChartOutlined, RightOutlined, LeftOutlined, UnorderedListOutlined} from "@ant-design/icons";
+import {LogoutOutlined, RightOutlined, LeftOutlined, UnorderedListOutlined} from "@ant-design/icons";
 import GrowingList from "../draganddrop/GrowingList";
 import AuthDialog from "./AuthDialog";
-// import DragAndDropPage from "../draganddrop/DragAndDropPage";
 
 const {Header, Sider, Content, Footer} = Layout;
-const {Text} = Typography;
 let namesList = JSON.parse(localStorage.getItem("NAMES")) ? JSON.parse(localStorage.getItem("NAMES")) : [];
 
 export default function ControlPanel(props) {
@@ -18,9 +16,7 @@ export default function ControlPanel(props) {
   let [visible, setVisible] = useState(true);
   let [projectName, setProjectName] = useState("");
   let [projects, setProjects] = useState([]);
-
-  const history = useHistory();
-
+  
   let {path, url} = useRouteMatch();
 
   const onMenuClick = (item) => {
@@ -84,13 +80,11 @@ export default function ControlPanel(props) {
     let lastList = namesList;
     let newList = [...lastList, data.name];
     window.localStorage.setItem("NAMES", JSON.stringify(newList));
-    console.log(JSON.parse(localStorage.getItem("NAMES")));
     setProjectName(data ? data.name : "");
   };
 
   const handleProjectsChange = (data) => {
     setProjectName(data ? data.name : "");
-    console.log({localStorage});
     setProjects(JSON.parse(localStorage.getItem(data.name)) ? JSON.parse(localStorage.getItem(data.name)) : []);
   };
 

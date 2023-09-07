@@ -4,7 +4,6 @@ import "./ControlPanel.css";
 import NameDialog from "./NameDialog";
 import ConfirmationButtonAntd from "../components/ConfirmationButtonAntd";
 
-const { Option } = Select;
 const rowStyle = {padding: '4px'};
 
 export default function AuthDialog({visible, onOk, onCancel}) {

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
-import {Col, DatePicker, Input, message, Modal, Row, Select, Space} from "antd";
+import {Col, DatePicker, Input, message, Modal, Row, Space} from "antd";
+import moment from "moment";
 import CancelButtonAntd from "../components/CancelButtonAntd";
 import ConfirmationButtonAntd from "../components/ConfirmationButtonAntd";
 const rowStyle = {padding: '4px'};
@@ -11,7 +12,6 @@ export default function CreateElementDialog({visible, data, type, onOk, onCancel
 
   useEffect(() => {
     if(data && type === "new") {
-      // console.log({data});
       let id = Math.floor(Math.random() * 1000);
       let res = data.find((s) => Number(s.id) === id);
       let result = res !== undefined;
@@ -25,9 +25,7 @@ export default function CreateElementDialog({visible, data, type, onOk, onCancel
       }
       setParams({...params, ...{status: "at_work"}})
       setId(id);
-      // setParams({...params, ...{index: id}});
     } else if (data && type === "project") {
-      console.log({data});
       setParams(data);
       setId(data.id);
     } else {
@@ -39,7 +37,6 @@ export default function CreateElementDialog({visible, data, type, onOk, onCancel
     <Modal
       destroyOnClose={true}
       footer={null}
-      // className="dialog-modal-style"
       style={{top: 10}}
       title="Создание задачи"
       open={visible}
@@ -81,7 +78,7 @@ export default function CreateElementDialog({visible, data, type, onOk, onCancel
             allowClear={true}
             placeholder="Срок выполнения"
             showTime
-            // defaultValue={application && application.accident_date ? dayjs(application.accident_date, dateFormat) : null}
+            defaultValue={params ? moment(params.date) : moment(new Date())}
             onChange={(dates, dateStrings) => {setParams({...params, ...{date: dateStrings}}); }}
             style={{width: 250}}
           />
@@ -115,10 +112,6 @@ export default function CreateElementDialog({visible, data, type, onOk, onCancel
             message.warning("Укажите срок выполнения!");
             return;
           }
-          // if(!params.moneySpent) {
-          //   message.warning("Укажите сумму потраченных средств!");
-          //   return;
-          // }
           onOk(params, id);
           setParams(null);
         }}/>
