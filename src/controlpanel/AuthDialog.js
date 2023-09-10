@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, Col, Divider, Input, message, Modal, Row, Select, Space} from "antd";
+import {Button, Col, Divider, Input, message, Modal, Row, Space} from "antd";
 import "./ControlPanel.css";
 import NameDialog from "./NameDialog";
 import ConfirmationButtonAntd from "../components/ConfirmationButtonAntd";

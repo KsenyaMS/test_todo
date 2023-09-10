@@ -23,6 +23,7 @@ export default function CreateElementDialog({visible, data, type, onOk, onCancel
           if (result === false) break;
         }
       }
+      console.log({id});
       setParams({...params, ...{status: "at_work"}})
       setId(id);
     } else if (data && type === "project") {
@@ -31,11 +32,10 @@ export default function CreateElementDialog({visible, data, type, onOk, onCancel
     } else {
       setParams(null);
     }
-  }, [data]);
+  }, [data, type]);
 
   return (
     <Modal
-      destroyOnClose={true}
       footer={null}
       style={{top: 10}}
       title="Создание задачи"
@@ -47,7 +47,7 @@ export default function CreateElementDialog({visible, data, type, onOk, onCancel
           <Input
             allowClear={true}
             value={params ? params.name : ""}
-            onChange={(e) => { setParams({...params, ...{name: e.target.value}}) }}
+            onChange={(e) => { setParams({...params, ...{name: e.target.value}});}}
           />
         </Col>
       </Row>

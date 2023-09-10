@@ -22,3 +22,13 @@
     min-width: 800px;
     width: 960px;
 }
+
+.footer {
+	position: relative;
+    left:0;
+    bottom:0;
+    right:0;
+    background-color: #F4F4F9;
+    min-height: 50px;
+    text-align: right;
+}

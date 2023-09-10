@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import {DeleteOutlined, EditOutlined, CheckSquareOutlined, BorderOutlined} from '@ant-design/icons';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { Button, Radio, Space, Typography } from "antd";
@@ -9,30 +9,12 @@ import ChangeNameDialog from "./ChangeNameDialog";
 
 export default function GrowingList({title, project}) {
   const namesList = JSON.parse(localStorage.getItem("NAMES")) ? JSON.parse(localStorage.getItem("NAMES")) : [];
-  let [state, setState] = useState([]);
   let [visible, setVisible] = useState(false);
   let [changeVisible, setChangeVisible] = useState(null);
   let [nameDialogVisible, setNameDialogVisible] = useState(false);
   let [tasksType, setTasksType] = useState("tasks");
   let [projectName, setProjectName] = useState(title);
-
-  useEffect(() => {
-    setProjectName(title);
-    let type = window.localStorage.getItem(`${projectName} + tasksType`);
-    if (type === "tasks") {
-      setState(JSON.parse(localStorage.getItem(projectName)) ? JSON.parse(localStorage.getItem(projectName)) : []);
-    }
-    else if (type === "done") {
-      let items = JSON.parse(localStorage.getItem(projectName)) ? JSON.parse(localStorage.getItem(projectName)) : [];
-      let result = items.filter((s) => s.status === "done");
-      setState(result);
-    }
-    else if (type === "at_work") {
-      let items = JSON.parse(localStorage.getItem(projectName)) ? JSON.parse(localStorage.getItem(projectName)) : [];
-      let result = items.filter((s) => s.status === "at_work");
-      setState(result);
-    }
-  }, [project, state]);
+  let [state, setState] = useState(JSON.parse(localStorage.getItem(projectName)) ? JSON.parse(localStorage.getItem(projectName)) : []);
 
   const onDragEnd = (result) => {
     let newItems = [...state];
@@ -76,7 +58,7 @@ export default function GrowingList({title, project}) {
     setState(items);
     window.localStorage.setItem(projectName, JSON.stringify(items));
   };
-  
+
   const deleteElement = (value) => {
     let items = [...state];
     let element = items.find((s) => s.id === value);
@@ -85,7 +67,7 @@ export default function GrowingList({title, project}) {
     setState(items);
     window.localStorage.setItem(projectName, JSON.stringify(items));
   };
-  
+
   const handleTaskStatusChange = (value) => {
     let items = [...state];
     let element = items.find((s) => s.id === value);
@@ -126,7 +108,7 @@ export default function GrowingList({title, project}) {
   return (
     <>
       <div class="flexbox-container">
-        <div style={{width: '80%', float: 'left'}} >
+        <div>
           <Space direction={"horizontal"} wrap style={{marginBottom: 16, marginTop: 10}}>
             <Typography.Title level={5} style={{ margin: 10, marginBottom: 10 }}>
               {projectName}
@@ -138,39 +120,38 @@ export default function GrowingList({title, project}) {
             />
           </Space>
         </div>
-          <div style={{width: '20%', float: 'right'}}>
-            <ConfirmationButtonAntd value="Добавить задачу в список" onClick={() => {setVisible(true)}}/>
-          </div>
-      </div>
-      <div class="flexbox-container">
-        <div style={{width: '80%', float: 'left'}} >
-          <Space direction={"horizontal"} wrap style={{marginBottom: 16, marginTop: 10}}>
-            <Radio.Group
-              value={tasksType}
-              onChange={handleTypeChange}
-              defaultValue={"tasks"}
-            >
-              <Radio.Button style={{borderTopLeftRadius: 15, borderBottomLeftRadius: 15}} value="at_work">Только в работе</Radio.Button>
-              <Radio.Button value="tasks">Все задачи</Radio.Button>
-              <Radio.Button style={{borderTopRightRadius: 15, borderBottomRightRadius: 15}}  value="done">Только завершенные</Radio.Button>
-            </Radio.Group>
-          </Space>
+        <div>
+          <ConfirmationButtonAntd value="Добавить задачу в список" onClick={() => {setVisible(true)}}/>
         </div>
+      </div>
+      <div style={{textAlign: "center"}}>
+        <Space direction={"horizontal"} wrap style={{marginBottom: 16, marginTop: 10}}>
+          <Radio.Group
+            value={tasksType}
+            style={{whiteSpace: "nowrap"}}
+            onChange={handleTypeChange}
+            // defaultValue={"tasks"}
+          >
+            <Radio.Button style={{borderTopLeftRadius: 15, borderBottomLeftRadius: 15}} value="at_work">Только в работе</Radio.Button>
+            <Radio.Button value="tasks">Все задачи</Radio.Button>
+            <Radio.Button style={{borderTopRightRadius: 15, borderBottomRightRadius: 15}}  value="done">Только завершенные</Radio.Button>
+          </Radio.Group>
+        </Space>
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="content-div">
           <div className="droppable-div">
-            <Droppable key={"droppable"} droppableId={"droppable"} >  
-              {(provided, snapshot) => (  
-                <div {...provided.droppableProps} ref={provided.innerRef}>  
-                  {state.map((item, idx) => (  
-                    <Draggable key={item.id} index={idx} draggableId={item.id}>  
-                      {(provided, snapshot) => (  
+            <Droppable key={"droppable"} droppableId={"droppable"} >
+              {(provided, snapshot) => (
+                <div {...provided.droppableProps} ref={provided.innerRef}>
+                  {state.map((item, idx) => (
+                    <Draggable key={item.id} index={idx} draggableId={item.id}>
+                      {(provided, snapshot) => (
                         <div
                           className="drag-item"
                           ref={provided.innerRef}
                           snapshot={snapshot}
-                          {...provided.draggableProps}  
+                          {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
                           <div style={{width: "100%"}}>
@@ -212,13 +193,13 @@ export default function GrowingList({title, project}) {
                                 <span>{item.description}</span>
                             </div>
                           </div>
-                        </div>  
-                      )}  
-                    </Draggable>  
+                        </div>
+                      )}
+                    </Draggable>
                   ))}
                   {provided.placeholder}
-                </div>  
-              )}  
+                </div>
+              )}
             </Droppable>
           </div>
         </div>
